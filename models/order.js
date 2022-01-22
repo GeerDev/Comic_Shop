@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
  
     static associate(models) {
       Order.belongsTo(models.User);
-      Order.belongsToMany(models.Comic, { through: 'ComicOrder' });
+      Order.belongsToMany(models.Comic, { through: 'ComicOrders', as: 'comics', foreignKey: 'OrderId' });
     }
   }
   Order.init({

@@ -6,15 +6,15 @@ module.exports = (sequelize, DataTypes) => {
   class Comic extends Model {
 
     static associate(models) {
-      Comic.belongsToMany(models.Category, { through: 'ComicCategory' });
-      Comic.belongsToMany(models.Order, { through: 'ComicOrder' });
+      Comic.belongsToMany(models.Category, { through: 'ComicCategories', as: 'categories', foreignKey: 'ComicId' });
+      Comic.belongsToMany(models.Order, { through: 'ComicOrders', as: 'orders', foreignKey: 'ComicId' });
     }
   }
   Comic.init({
     name: DataTypes.STRING,
     description: DataTypes.STRING,
     image: DataTypes.STRING,
-    price: DataTypes.INTEGER
+    price: DataTypes.FLOAT
   }, {
     sequelize,
     modelName: 'Comic',
