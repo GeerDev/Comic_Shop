@@ -109,7 +109,7 @@ const ComicController = {
             console.error(error)
             res.status(500).send({message:"Ha habido un problema al eliminar el comic"})
         }
-    },
+    }
 }
 
 module.exports = ComicController
