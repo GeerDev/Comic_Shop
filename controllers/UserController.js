@@ -1,4 +1,4 @@
-const { User, Token, Sequelize } = require('../models/index.js');
+const { User, Token, Sequelize, Order, Comic } = require('../models/index.js');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { Op } = Sequelize;
@@ -66,7 +66,19 @@ const UserController = {
             console.log(error)
             res.status(500).send({ message: 'hubo un problema al tratar de desconectarte' })
         }
-    }
+    },
+    getUserById(req, res) {
+        User.findByPk(req.user.id, {
+            include: [
+            {model: Order, include: [{model: Comic, as: 'comics', through: {attributes: []}}]} 
+        ]
+        })
+            .then(user => res.send(user))
+            .catch(err => {
+                console.error(err)
+                res.status(500).send({ message :'No se ha podido cargar el usuario'})
+            })
+    },
 }
 
 module.exports = UserController
