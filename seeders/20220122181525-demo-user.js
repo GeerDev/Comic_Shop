@@ -1,12 +1,20 @@
 'use strict';
 
+const bcrypt = require('bcryptjs');
+
+const arrayHash = ['123456', 'patata', 'jajasaludos', 'fechacumple', 'readme.md']
+
+const passwordHash = arrayHash.map(element => {
+    return bcrypt.hashSync( element, 10)
+})
+
 module.exports = {
   async up (queryInterface, Sequelize) {
     return queryInterface.bulkInsert( 'Users', [
       {
       name: 'John',
       email: 'example@example.com',
-      password:'123456',
+      password: passwordHash[0],
       rol:'user',
       createdAt: new Date(),
       updatedAt: new Date()
@@ -14,7 +22,7 @@ module.exports = {
     {
       name: 'Amparo',
       email: 'amparo@example.com',
-      password:'123456',
+      password: passwordHash[1],
       rol:'user',
       createdAt: new Date(),
       updatedAt: new Date()
@@ -22,7 +30,7 @@ module.exports = {
     {
       name: 'Sofia',
       email: 'sofia@example.com',
-      password:'123456',
+      password: passwordHash[2],
       rol:'admin',
       createdAt: new Date(),
       updatedAt: new Date()
@@ -30,7 +38,7 @@ module.exports = {
     {
       name: 'Ger',
       email: 'ger@example.com',
-      password:'123456',
+      password: passwordHash[3],
       rol:'admin',
       createdAt: new Date(),
       updatedAt: new Date()
@@ -38,7 +46,7 @@ module.exports = {
     {
       name: 'Ivan',
       email: 'ivan@example.com',
-      password:'123456',
+      password: passwordHash[4],
       rol:'user',
       createdAt: new Date(),
       updatedAt: new Date()
