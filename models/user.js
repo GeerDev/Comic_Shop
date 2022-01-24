@@ -7,11 +7,12 @@ module.exports = (sequelize, DataTypes) => {
 
     static associate(models) {
       User.hasMany(models.Order);
+      User.hasMany(models.Token);
     }
   }
   User.init({
     name: DataTypes.STRING,
-    email: DataTypes.STRING,
+    email: {type:DataTypes.STRING,unique: true},
     password: DataTypes.STRING,
     rol: DataTypes.STRING
   }, {
