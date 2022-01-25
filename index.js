@@ -13,5 +13,6 @@ app.use('/comics', require('./routes/comics'));
 app.use('/categories', require('./routes/categories'));
 app.use('/orders', require('./routes/orders'));
 app.use('/users', require('./routes/users'));
+app.use('/reviews', require('./routes/reviews'));
 
 app.listen(PORT, () => console.log(`Servidor levantado en el puerto ${PORT}`))

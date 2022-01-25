@@ -8,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Comic.belongsToMany(models.Category, { through: 'ComicCategories', as: 'categories', foreignKey: 'ComicId' });
       Comic.belongsToMany(models.Order, { through: 'ComicOrders', as: 'orders', foreignKey: 'ComicId' });
+      Comic.hasMany(models.Review);
     }
   }
   Comic.init({
