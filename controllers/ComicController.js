@@ -1,4 +1,4 @@
-const { Comic, Category, Sequelize } = require('../models/index.js');
+const { Comic, Category, Sequelize, Review } = require('../models/index.js');
 const { Op }= Sequelize;
 
 const ComicController = {
@@ -23,7 +23,9 @@ const ComicController = {
     },
     getAll(req,res){
         Comic.findAll({
-            include: [{model: Category, as: 'categories', through: {attributes: []}}]
+            include: [
+                {model: Category, as: 'categories', through: {attributes: []}}, Review
+            ]
         })
         .then(comics => res.send(comics))
         .catch(err => {
@@ -32,7 +34,11 @@ const ComicController = {
         })
     },
     getById(req, res) {
-        Comic.findByPk(req.params.id)
+        Comic.findByPk(req.params.id, {
+            include: [
+                {model: Category, as: 'categories', through: {attributes: []}}, Review
+            ]
+        })
             .then(comic => res.send(comic))
             .catch(err => {
                 console.error(err)

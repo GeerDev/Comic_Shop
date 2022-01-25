@@ -2,7 +2,7 @@
 
 const bcrypt = require('bcryptjs');
 
-const arrayHash = ['123456', 'patata', 'jajasaludos', 'fechacumple', 'readme.md']
+const arrayHash = ['123456', 'patata', 'jajasaludos', 'fechacumple', 'readmemd']
 
 const passwordHash = arrayHash.map(element => {
     return bcrypt.hashSync( element, 10)
