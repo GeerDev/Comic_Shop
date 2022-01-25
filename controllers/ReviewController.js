@@ -16,7 +16,7 @@ const ReviewController = {
     },
     getAll(req,res){
         Review.findAll({
-            include: [User]
+            include: [User, Comic]
         })
         .then(reviews => res.send(reviews))
         .catch(err => {
