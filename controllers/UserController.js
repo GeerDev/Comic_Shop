@@ -10,6 +10,11 @@ const UserController = {
                 return res.status(400).json({msg:'Por favor rellene los campos que faltan'})
             }
             const { password } = req.body
+            if (/^[a-zA-Z]\w{3,14}$/i.test(password) !== true) {
+                return res.send(
+                  "El primer carácter de la contraseña debe ser una letra, debe contener al menos 4 caracteres y no más de 15 caracteres y no se pueden usar más  caracteres que letras, números y guiones bajos."
+                );
+            }
             const user = await User.findOne({
                 where:{
                     email:req.body.email
@@ -22,8 +27,7 @@ const UserController = {
             const newUser = await User.create({...req.body, password: hash, rol: 'user'})
             res.status(201).send({ newUser })
         } catch (error) {
-            console.error(error);
-            res.status(500).send({ error, message: 'Hubo un problema al tratar de registar' })
+            res.status(400).send({ msg: error.errors[0].message })
         }
     },
     async login(req, res) {

@@ -5,7 +5,7 @@ const { authentication, isAdmin} = require('../middlewares/authentication');
 
 router.post('/', authentication, ReviewController.create)
 router.get('/', ReviewController.getAll)
-router.put('/:id', ReviewController.update)
+router.put('/:id', authentication, ReviewController.update)
 router.delete('/:id', ReviewController.delete)
 
 module.exports = router;

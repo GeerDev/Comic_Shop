@@ -7,7 +7,7 @@ const OrderController = {
                 return res.status(400).json({msg:'Por favor rellene los campos que faltan'})
             }
             const { comics, ...data} = req.body
-            const post = await Order.create({data, UserId: req.user.id });
+            const post = await Order.create({...data, UserId: req.user.id });
 
             if (comics && comics.length > 0) {
                     post.setComics(comics)
@@ -16,7 +16,7 @@ const OrderController = {
             return res.status(200).send({ message: 'Pedido creado con éxito', post })    
         } catch (error) {
             console.error(error)
-            res.status(500).send({message:"Ha habido un problema al crear el pedido"})
+            res.status(400).send({ msg: error.errors[0].message })
         }
     },
     getAll(req,res){
@@ -33,7 +33,7 @@ const OrderController = {
         try {
             const { comics, ...data} = req.body 
             const put = await Order.findByPk(req.params.id)
-            put.update(data)
+            put.update({...data, UserId: req.user.id })
 
             if (comics && comics.length > 0) {
                 put.setComics(comics)

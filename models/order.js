@@ -13,7 +13,12 @@ module.exports = (sequelize, DataTypes) => {
   Order.init({
     details: DataTypes.STRING,
     status: DataTypes.STRING,
-    delivery: DataTypes.DATE,
+    delivery: {
+      type: DataTypes.DATE,
+      validate: {
+        isAfter: `${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate()}`
+      },
+    },
     UserId: DataTypes.INTEGER
   }, {
     sequelize,

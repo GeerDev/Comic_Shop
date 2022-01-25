@@ -27,7 +27,7 @@ const ReviewController = {
     async update(req, res) {
         try {
             const put = await Review.findByPk(req.params.id)
-            put.update({...req.body})
+            put.update({...req.body, UserId: req.user.id })
 
             return res.status(200).send({ message: 'Categoria actualizada con éxito', put })  
         } catch (error) {
