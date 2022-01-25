@@ -3,10 +3,10 @@ const { Review, Comic, User } = require('../models/index.js');
 const ReviewController = {
     async create(req, res) {
         try {
-            if(!req.body.title || !req.body.content || !req.body.ComicId || !req.body.UserId){
+            if(!req.body.title || !req.body.content || !req.body.ComicId){
                 return res.status(400).json({msg:'Por favor rellene los campos que faltan'})
             }
-            const review = await Review.create({...req.body});
+            const review = await Review.create({...req.body, UserId: req.user.id });
 
             return res.status(200).send({ message: 'Review creada con éxito', review })    
         } catch (error) {
