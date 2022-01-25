@@ -67,7 +67,7 @@ const UserController = {
             res.status(500).send({ message: 'hubo un problema al tratar de desconectarte' })
         }
     },
-    getUserById(req, res) {
+    getUserByIdAuth(req, res) {
         User.findByPk(req.user.id, {
             include: [
             {model: Order, include: [{model: Comic, as: 'comics', through: {attributes: []}}]} 
@@ -78,6 +78,51 @@ const UserController = {
                 console.error(err)
                 res.status(500).send({ message :'No se ha podido cargar el usuario'})
             })
+    },
+    async update(req, res) {
+        try {
+            const put = await User.findByPk(req.params.id)
+            const { password } = req.body
+
+            const hash = await bcrypt.hash( password, 10)
+
+            put.update({...req.body, password: hash, rol: 'user'})
+
+            return res.status(200).send({ message: 'Usuario actualizado con éxito', put })  
+        } catch (error) {
+            console.error(error)
+            res.status(500).send({message:"No ha sido posible actualizar el usuario"})
+        }
+    },
+    async delete(req, res) {
+        try {
+            await User.destroy({
+                where: {
+                    id: req.params.id
+                }
+            })
+            res.send(
+                'El usuario ha sido eliminado con éxito'
+            )
+        } catch (error) {
+            console.error(error)
+            res.status(500).send({message:"Ha habido un problema al eliminar el usuario"})
+        }
+    },
+    async deletemyself(req, res) {
+        try {
+            await User.destroy({
+                where: {
+                    id: req.user.id
+                }
+            })
+            res.send(
+                'El usuario ha sido eliminado con éxito'
+            )
+        } catch (error) {
+            console.error(error)
+            res.status(500).send({message:"Ha habido un problema al eliminar el usuario"})
+        }
     },
 }
 
