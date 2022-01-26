@@ -7,7 +7,7 @@ const ComicController = {
             if(!req.body.name || !req.body.description || !req.body.price || !req.body.categories){
                 return res.status(400).json({msg:'Por favor rellene los campos que faltan'})
             }
-            if (req.file) req.body.image = req.file.filename;
+            req.file ? req.body.image = req.file.filename : req.body.image = ''
             const { categories, ...data} = req.body
             const post = await Comic.create(data);
 
@@ -88,7 +88,7 @@ const ComicController = {
     },
     async update(req, res) {
         try {
-            if (req.file) req.body.image = req.file.filename;
+            req.file ? req.body.image = req.file.filename : req.body.image = ''
             const { categories, ...data} = req.body 
             const put = await Comic.findByPk(req.params.id)
             put.update(data)
