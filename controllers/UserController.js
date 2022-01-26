@@ -27,7 +27,10 @@ const UserController = {
             const newUser = await User.create({...req.body, password: hash, rol: 'user'})
             res.status(201).send({ newUser })
         } catch (error) {
-            res.status(400).send({ msg: error.errors[0].message })
+            if(error.errors?.length > 0){
+                res.status(400).send({ msg: error?.errors?.[0]?.message })
+            }
+            res.status(500).send({message:"Ha habido un problema al crear el usuario"})
         }
     },
     async login(req, res) {
