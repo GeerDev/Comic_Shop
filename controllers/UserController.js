@@ -56,6 +56,7 @@ const UserController = {
 
         } catch (error) {
             console.error(error);
+            res.status(500).send({message:"Ha habido un problema al intentar hacer el login"})
         }
     },
     async logout(req, res) {
@@ -71,7 +72,7 @@ const UserController = {
             res.send({ message: 'Desconectado con éxito' })
         } catch (error) {
             console.log(error)
-            res.status(500).send({ message: 'hubo un problema al tratar de desconectarte' })
+            res.status(500).send({ message: 'Hubo un problema al tratar de desconectarte' })
         }
     },
     getUserByIdAuth(req, res) {
@@ -88,17 +89,19 @@ const UserController = {
     },
     async update(req, res) {
         try {
-            const put = await User.findByPk(req.params.id)
+            const user = await User.findByPk(req.params.id)
             const { password } = req.body
 
             const hash = await bcrypt.hash( password, 10)
 
-            put.update({...req.body, password: hash, rol: 'user'})
+            user.update({...req.body, password: hash, rol: 'user'})
 
-            return res.status(200).send({ message: 'Usuario actualizado con éxito', put })  
+            return res.status(200).send({ message: 'Usuario actualizado con éxito', user })  
         } catch (error) {
-            console.error(error)
-            res.status(500).send({message:"No ha sido posible actualizar el usuario"})
+            if(error.errors?.length > 0){
+                res.status(400).send({ msg: error?.errors?.[0]?.message })
+            }
+            res.status(500).send({message:"Ha habido un problema al actualizar el usuario"})
         }
     },
     async delete(req, res) {

@@ -8,13 +8,13 @@ const CategoryController = {
                 return res.status(400).json({msg:'Por favor rellene los campos que faltan'})
             }
             const { comics, ...data} = req.body
-            const post = await Category.create(data);
+            const category = await Category.create(data);
 
             if (comics && comics.length > 0) {
-                    post.setComics(comics)
+                    category.setComics(comics)
                 }
 
-            return res.status(200).send({ message: 'Categoría creada con éxito', post })    
+            return res.status(200).send({ message: 'Categoría creada con éxito', category })    
         } catch (error) {
             console.error(error)
             res.status(500).send({message:"Ha habido un problema al crear la categoría"})
@@ -55,14 +55,14 @@ const CategoryController = {
     async update(req, res) {
         try {
             const { comics, ...data} = req.body 
-            const put = await Category.findByPk(req.params.id)
-            put.update(data)
+            const category = await Category.findByPk(req.params.id)
+            category.update(data)
 
             if (comics && comics.length > 0) {
-                put.setComics(comics)
+                category.setComics(comics)
             }
 
-            return res.status(200).send({ message: 'Categoria actualizada con éxito', put })  
+            return res.status(200).send({ message: 'Categoria actualizada con éxito', category })  
         } catch (error) {
             console.error(error)
             res.status(500).send({message:"No ha sido posible actualizar la categoría"})

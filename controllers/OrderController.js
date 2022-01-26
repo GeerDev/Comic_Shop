@@ -7,16 +7,18 @@ const OrderController = {
                 return res.status(400).json({msg:'Por favor rellene los campos que faltan'})
             }
             const { comics, ...data} = req.body
-            const post = await Order.create({...data, UserId: req.user.id });
+            const order = await Order.create({...data, UserId: req.user.id });
 
             if (comics && comics.length > 0) {
-                    post.setComics(comics)
+                    order.setComics(comics)
                 }
 
-            return res.status(200).send({ message: 'Pedido creado con éxito', post })    
+            return res.status(200).send({ message: 'Pedido creado con éxito', order })    
         } catch (error) {
-            console.error(error)
-            res.status(400).send({ msg: error.errors[0].message })
+            if(error.errors?.length > 0){
+                res.status(400).send({ msg: error?.errors?.[0]?.message })
+            }
+            res.status(500).send({message:"Ha habido un problema al crear el pedido"})
         }
     },
     getAll(req,res){
@@ -32,17 +34,19 @@ const OrderController = {
     async update(req, res) {
         try {
             const { comics, ...data} = req.body 
-            const put = await Order.findByPk(req.params.id)
-            put.update({...data, UserId: req.user.id })
+            const order = await Order.findByPk(req.params.id)
+            order.update({...data, UserId: req.user.id })
 
             if (comics && comics.length > 0) {
-                put.setComics(comics)
+                order.setComics(comics)
             }
 
-            return res.status(200).send({ message: 'Pedido actualizado con éxito', put })  
+            return res.status(200).send({ message: 'Pedido actualizado con éxito', order })  
         } catch (error) {
-            console.error(error)
-            res.status(500).send({message:"No ha sido posible actualizar el pedido"})
+            if(error.errors?.length > 0){
+                res.status(400).send({ msg: error?.errors?.[0]?.message })
+            }
+            res.status(500).send({message:"Ha habido un problema al actualizar el pedido"})
         }
     },
     async delete(req, res) {

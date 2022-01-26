@@ -9,13 +9,13 @@ const ComicController = {
             }
             req.file ? req.body.image = req.file.filename : req.body.image = ''
             const { categories, ...data} = req.body
-            const post = await Comic.create(data);
+            const comic = await Comic.create(data);
 
             if (categories && categories.length > 0) {
-                    post.setCategories(categories)
+                    comic.setCategories(categories)
                 }
 
-            return res.status(200).send({ message: 'Comic creado con éxito', post })    
+            return res.status(200).send({ message: 'Comic creado con éxito', comic })    
         } catch (error) {
             console.error(error)
             res.status(500).send({message:"Ha habido un problema al crear el comic"})
@@ -90,14 +90,14 @@ const ComicController = {
         try {
             req.file ? req.body.image = req.file.filename : req.body.image = ''
             const { categories, ...data} = req.body 
-            const put = await Comic.findByPk(req.params.id)
-            put.update(data)
+            const comic = await Comic.findByPk(req.params.id)
+            comic.update(data)
 
             if (categories && categories.length > 0) {
-                put.setCategories(categories)
+                comic.setCategories(categories)
             }
 
-            return res.status(200).send({ message: 'Comic actualizado con éxito', put })  
+            return res.status(200).send({ message: 'Comic actualizado con éxito', comic })  
         } catch (error) {
             console.error(error)
             res.status(500).send({message:"No ha sido posible actualizar el comic"})
