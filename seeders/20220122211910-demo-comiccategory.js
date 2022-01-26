@@ -21,6 +21,18 @@ module.exports = {
       createdAt: new Date(),
       updatedAt: new Date()
     },
+    {
+      ComicId: '4',
+      CategoryId: '2',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      ComicId: '5',
+      CategoryId: '3',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
   ])
   },
 

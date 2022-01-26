@@ -14,15 +14,15 @@ module.exports = {
     {
       details: 'Detalles del segundo pedido',
       status: 'Entregado',
-      delivery:'2020-05-03',
-      UserId: 3,
+      delivery:'2022-05-03',
+      UserId: 1,
       createdAt: new Date(),
       updatedAt: new Date()
     },
     {
       details: 'Detalles del tercer pedido',
       status: 'Entregado',
-      delivery:'2019-12-03',
+      delivery:'2022-05-03',
       UserId: 3,
       createdAt: new Date(),
       updatedAt: new Date()
@@ -30,7 +30,7 @@ module.exports = {
     {
       details: 'Detalles del cuarto pedido',
       status: 'Pendiente',
-      delivery:'2022-05-22',
+      delivery:'2022-05-03',
       UserId: 4,
       createdAt: new Date(),
       updatedAt: new Date()
@@ -38,7 +38,7 @@ module.exports = {
     {
       details: 'Detalles del quinto pedido',
       status: 'Pendiente',
-      delivery:'2021-09-11',
+      delivery:'2022-05-03',
       UserId: 4,
       createdAt: new Date(),
       updatedAt: new Date()

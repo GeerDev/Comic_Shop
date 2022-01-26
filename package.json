@@ -22,7 +22,6 @@
     "nodemon": "^2.0.15"
   },
   "dependencies": {
-    "axios": "^0.25.0",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^14.2.0",

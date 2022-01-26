@@ -11,7 +11,7 @@ module.exports = {
     },
     {
       ComicId: '2',
-      OrderId: '4',
+      OrderId: '3',
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -21,6 +21,24 @@ module.exports = {
       createdAt: new Date(),
       updatedAt: new Date()
     },
+    {
+      ComicId: '3',
+      OrderId: '2',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      ComicId: '3',
+      OrderId: '1',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      ComicId: '1',
+      OrderId: '4',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }
   ])
   },
 

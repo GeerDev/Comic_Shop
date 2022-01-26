@@ -6,7 +6,7 @@ module.exports = {
       {
       title: 'Primera review',
       content: 'Detalles de la primera review',
-      UserId: 3,
+      UserId: 4,
       ComicId: 2,
       createdAt: new Date(),
       updatedAt: new Date()
@@ -14,7 +14,7 @@ module.exports = {
     {
       title: 'Segunda review',
       content: 'Detalles de la segunda review',
-      UserId: 3,
+      UserId: 4,
       ComicId: 3,
       createdAt: new Date(),
       updatedAt: new Date()
@@ -22,7 +22,7 @@ module.exports = {
     {
       title: 'Tercera review',
       content: 'Detalles de la tercera review',
-      UserId: 1,
+      UserId: 3,
       ComicId: 3,
       createdAt: new Date(),
       updatedAt: new Date()
@@ -30,8 +30,8 @@ module.exports = {
     {
       title: 'Cuarta review',
       content: 'Detalles de la cuarta review',
-      UserId: 2,
-      ComicId: 3,
+      UserId: 3,
+      ComicId: 5,
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -39,15 +39,15 @@ module.exports = {
       title: 'Quinta review',
       content: 'Detalles de la quinta review',
       UserId: 3,
-      ComicId: 3,
+      ComicId: 2,
       createdAt: new Date(),
       updatedAt: new Date()
     },
     {
       title: 'Sexta review',
       content: 'Detalles de la sexta review',
-      UserId: 1,
-      ComicId: 4,
+      UserId: 3,
+      ComicId: 1,
       createdAt: new Date(),
       updatedAt: new Date()
     }
