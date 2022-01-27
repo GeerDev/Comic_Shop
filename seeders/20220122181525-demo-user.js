@@ -16,6 +16,7 @@ module.exports = {
       email: 'laura@example.com',
       password: passwordHash[0],
       rol:'user',
+      confirmed: true,
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -24,6 +25,7 @@ module.exports = {
       email: 'amparo@example.com',
       password: passwordHash[1],
       rol:'user',
+      confirmed: true,
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -32,6 +34,7 @@ module.exports = {
       email: 'sofia@example.com',
       password: passwordHash[2],
       rol:'employee',
+      confirmed: true,
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -40,6 +43,7 @@ module.exports = {
       email: 'ger@example.com',
       password: passwordHash[3],
       rol:'admin',
+      confirmed: true,
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -48,6 +52,7 @@ module.exports = {
       email: 'ivan@example.com',
       password: passwordHash[4],
       rol:'user',
+      confirmed: true,
       createdAt: new Date(),
       updatedAt: new Date()
     }

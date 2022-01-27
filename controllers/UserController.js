@@ -1,6 +1,7 @@
 const { User, Token, Sequelize, Order, Comic } = require('../models/index.js');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const transporter = require("../config/nodemailer");
 const { Op } = Sequelize;
 
 const UserController = {
@@ -24,8 +25,26 @@ const UserController = {
                 return res.status(400).send({ message: 'Este correo ya existe' });
             }
             const hash = await bcrypt.hash( password, 10)
-            const newUser = await User.create({...req.body, password: hash, rol: 'user'})
-            res.status(201).send({ newUser })
+            const newUser = await User.create({...req.body, password: hash, confirmed: false, rol: 'user'})
+
+            const emailToken = jwt.sign({email:req.body.email}, process.env.Jwt_Secret, {expiresIn:'48h'})
+            const url = 'http://localhost:3000/users/confirm/' + emailToken
+            await transporter.sendMail({
+              to: req.body.email,
+              subject: "Confirme su registro",
+              html: `<h3>Bienvenido ${req.body.name}, estás a un paso de registrarte </h3>
+              <a href="${url}"> Click para confirmar tu registro</a>
+              `,
+            }, (error, info) => {
+                if (error){
+                    res.status(500).send(error.message);
+                } else {
+                    console.log('Email enviado', info.messageId);
+                    res.status(200).jsonp(req.body);
+                }
+            });
+
+            res.status(201).send({message: "Te hemos enviado un correo para confirmar el registro", newUser })
         } catch (error) {
             if(error.errors?.length > 0){
                 res.status(400).send({ msg: error?.errors?.[0]?.message })
@@ -47,6 +66,10 @@ const UserController = {
 
             if (!isMatch) {
                 return res.status(400).send({ message: 'Contraseña o nombre incorrectos' });
+            }
+
+            if (!user.confirmed) {
+                return res.status(400).send({ message: "Debes confirmar tu correo" });
             }
 
             token = jwt.sign({ id: user.id }, process.env.Jwt_Secret);
@@ -138,6 +161,20 @@ const UserController = {
             res.status(500).send({message:"Ha habido un problema al eliminar el usuario"})
         }
     },
+    async confirm(req,res){
+        try {
+          const token = req.params.emailToken;
+          const payload = jwt.verify(token, process.env.Jwt_Secret)
+          await User.update({confirmed:true},{
+            where:{
+              email: payload.email
+            }
+          })
+          res.status(201).send("Usuario confirmado con exito" );
+        } catch (error) {
+          console.error(error)
+        }
+      }
 }
 
 module.exports = UserController

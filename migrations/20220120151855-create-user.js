@@ -21,6 +21,9 @@ module.exports = {
       rol: {
         type: Sequelize.STRING
       },
+      confirmed: {
+        type: Sequelize.BOOLEAN
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
