@@ -2,6 +2,7 @@ const { User, Token, Sequelize, Order, Comic } = require('../models/index.js');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const transporter = require("../config/nodemailer");
+const inLineCss = require('nodemailer-juice');
 const { Op } = Sequelize;
 
 const UserController = {
@@ -29,11 +30,39 @@ const UserController = {
 
             const emailToken = jwt.sign({email:req.body.email}, process.env.Jwt_Secret, {expiresIn:'48h'})
             const url = 'http://localhost:3000/users/confirm/' + emailToken
+            transporter.use('compile', inLineCss())
             await transporter.sendMail({
               to: req.body.email,
               subject: "Confirme su registro",
-              html: `<h3>Bienvenido ${req.body.name}, estás a un paso de registrarte </h3>
-              <a href="${url}"> Click para confirmar tu registro</a>
+              html: `
+              <style>
+              .contenedor {
+                  color:black;
+              }
+              button {
+                background-color: #df654b;
+                border: none;
+                color: white;
+                padding: 15px 32px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+                }
+   
+              a {
+                text-decoration: none;
+                list-style-type: none;
+              }
+              </style>
+              <div class="contenedor">
+                <img src="https://www.nicepng.com/png/detail/977-9771496_logo-la-tienda-de-comics-illustration.png" alt="Tienda Comics" width="500" height="600"> 
+                <h1>¡Ya casi estamos!</h1>
+                <h3>Bienvenido ${req.body.name}, estás a un paso de registrarte, pulsa el siguiente botón para completar el registro </h3>
+                <button><a href="${url}"> Click para confirmar tu registro</a></button>
+                <p>Has recibido este correo electrónico porque has solicitado un registro en la tienda de los mejores comics de Valencia. Puedes ignorar este mensaje si no lo has solicitado.</p>
+              </div>
+
               `,
             }, (error, info) => {
                 if (error){
