@@ -90,11 +90,15 @@ const UserController = {
     async update(req, res) {
         try {
             const user = await User.findByPk(req.params.id)
-            const { password } = req.body
+            if (req.body.password) {
+                const { password } = req.body
 
-            const hash = await bcrypt.hash( password, 10)
+                const hash = await bcrypt.hash( password, 10)
+    
+                user.update({...req.body, password: hash, rol: 'user'})
+            }
 
-            user.update({...req.body, password: hash, rol: 'user'})
+            user.update({...req.body, rol: 'user'})
 
             return res.status(200).send({ message: 'Usuario actualizado con éxito', user })  
         } catch (error) {

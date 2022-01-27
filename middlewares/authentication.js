@@ -26,6 +26,7 @@ const authentication = async(req, res, next) => {
     }
 }
 const isAdmin = async(req, res, next) => {
+    console.log(req.user.rol);
     const admins = ['admin'];
     if (!admins.includes(req.user.rol)) {
         return res.status(403).send({
@@ -36,8 +37,8 @@ const isAdmin = async(req, res, next) => {
 }
 
 const isEmployee = async(req, res, next) => {
-    const admins = ['admin','employee'];
-    if (!admins.includes(req.user.rol)) {
+    const employee = ['admin','employee'];
+    if (!employee.includes(req.user.rol)) {
         return res.status(403).send({
             message: 'You do not have permission'
         });
