@@ -13,6 +13,7 @@ El proyecto ha sido desarrollado utilizando las siguientes paquetes en Nodejs:
 * Jsonwebtoken
 * Multer
 * Dotenv
+* Nodemailer
 
 ## ¿Como desplegar el proyecto? 📋
 
